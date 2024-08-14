@@ -88,6 +88,54 @@
         "staticFilePath": "dist/personal-finance-system/browser",
         "spa": true
       }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "./.storybook",
+        "browserTarget": "personal-finance-system:build",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/personal-finance-system",
+        "configDir": "./.storybook",
+        "browserTarget": "personal-finance-system:build",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c ./.storybook --url=http://localhost:4400"
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "personal-finance-system:build-storybook",
+        "staticFilePath": "dist/storybook/personal-finance-system",
+        "spa": true
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "personal-finance-system:build-storybook:ci"
+        }
+      }
     }
   }
 }
